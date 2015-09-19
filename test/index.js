@@ -23,6 +23,7 @@ describe('Account', function() {
     });
   });
 });
+
 describe('Actions', function() {
   describe('#list()', function () {
     it('should list all the actions', function (done) {
@@ -46,5 +47,29 @@ describe('Actions', function() {
           done(err);
         });
     });
+  });
+  describe('#show()', function () {
+    it('should show an action', function (done) {
+      actions
+        .list()
+        .then(function(action_list){
+          actions
+            .show(action_list.actions[0].id)
+            .then(function(res){
+              expect(res).to.have.property('action');
+              expect(res.action).to.have.property('id');
+              expect(res.action).to.have.property('status');
+              expect(res.action).to.have.property('type');
+              expect(res.action).to.have.property('started_at');
+              expect(res.action).to.have.property('completed_at');
+              expect(res.action).to.have.property('resource_id');
+
+              done();
+            })
+            .catch(function(err){
+              done(err);
+            });
+        });
+      });
   });
 });
