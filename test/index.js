@@ -1,9 +1,50 @@
-var assert = require("assert");
-describe('Array', function() {
-  describe('#indexOf()', function () {
-    it('should return -1 when the value is not present', function () {
-      assert.equal(-1, [1,2,3].indexOf(5));
-      assert.equal(-1, [1,2,3].indexOf(0));
+var expect = require('chai').expect;
+var account = require('../lib/account.js');
+var actions = require('../lib/actions.js');
+// Test the account
+describe('Account', function() {
+  describe('#show()', function () {
+    it('should show the account', function (done) {
+      account
+        .show()
+        .then(function(res){
+          expect(res).to.have.property('account');
+          expect(res.account).to.have.property('droplet_limit');
+          expect(res.account).to.have.property('email');
+          expect(res.account).to.have.property('uuid');
+          expect(res.account).to.have.property('email_verified');
+          expect(res.account).to.have.property('status');
+          expect(res.account).to.have.property('status_message');
+          done();
+        })
+        .catch(function(err){
+          done(err);
+        });
+    });
+  });
+});
+describe('Actions', function() {
+  describe('#list()', function () {
+    it('should list all the actions', function (done) {
+      actions
+        .list()
+        .then(function(res){
+          expect(res).to.have.property('actions');
+          expect(res.actions[0]).to.have.property('id');
+          expect(res.actions[0]).to.have.property('status');
+          expect(res.actions[0]).to.have.property('type');
+          expect(res.actions[0]).to.have.property('started_at');
+          expect(res.actions[0]).to.have.property('completed_at');
+          expect(res.actions[0]).to.have.property('resource_id');
+
+          expect(res).to.have.property('links');
+          expect(res).to.have.property('meta');
+          expect(res.meta).to.have.property('total');
+          done();
+        })
+        .catch(function(err){
+          done(err);
+        });
     });
   });
 });
