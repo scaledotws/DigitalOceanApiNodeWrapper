@@ -1,0 +1,31 @@
+{
+  "name": "digitaloceanapinodewrapper",
+  "version": "0.0.1-alpha",
+  "description": "This is a simple to use, rock solid digital ocean node api wrapper for node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scaledotws/DigitalOceanApiNodeWrapper.git"
+  },
+  "keywords": [
+    "digital",
+    "ocean"
+  ],
+  "author": "scale.ws <luca@scale.ws>",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/scaledotws/DigitalOceanApiNodeWrapper/issues"
+  },
+  "homepage": "https://github.com/scaledotws/DigitalOceanApiNodeWrapper#readme",
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "mocha": "^2.3.2"
+  },
+  "dependencies": {
+    "request": "^2.62.0",
+    "simple-oauth2": "^0.2.1"
+  }
+}
