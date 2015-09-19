@@ -1,6 +1,7 @@
 var expect = require('chai').expect;
 var account = require('../lib/account.js');
 var actions = require('../lib/actions.js');
+var domains = require('../lib/domains.js');
 // Test the account
 describe('Account', function() {
   describe('#show()', function () {
@@ -24,20 +25,13 @@ describe('Account', function() {
   });
 });
 
-describe('Actions', function() {
+describe('Domains', function() {
   describe('#list()', function () {
-    it('should list all the actions', function (done) {
-      actions
+    it('should list all the domains', function (done) {
+      domains
         .list()
         .then(function(res){
-          expect(res).to.have.property('actions');
-          expect(res.actions[0]).to.have.property('id');
-          expect(res.actions[0]).to.have.property('status');
-          expect(res.actions[0]).to.have.property('type');
-          expect(res.actions[0]).to.have.property('started_at');
-          expect(res.actions[0]).to.have.property('completed_at');
-          expect(res.actions[0]).to.have.property('resource_id');
-
+          expect(res).to.have.property('domains');
           expect(res).to.have.property('links');
           expect(res).to.have.property('meta');
           expect(res.meta).to.have.property('total');
@@ -48,28 +42,40 @@ describe('Actions', function() {
         });
     });
   });
-  describe('#show()', function () {
-    it('should show an action', function (done) {
-      actions
-        .list()
-        .then(function(action_list){
-          actions
-            .show(action_list.actions[0].id)
-            .then(function(res){
-              expect(res).to.have.property('action');
-              expect(res.action).to.have.property('id');
-              expect(res.action).to.have.property('status');
-              expect(res.action).to.have.property('type');
-              expect(res.action).to.have.property('started_at');
-              expect(res.action).to.have.property('completed_at');
-              expect(res.action).to.have.property('resource_id');
-
-              done();
-            })
-            .catch(function(err){
-              done(err);
-            });
+  describe('#create()', function () {
+    it('should list all the domains', function (done) {
+      domains
+        .create({
+            "type": "A",
+            "name": "www.prova.com",
+            "data": "10.10.10.10"
+          })
+        .then(function(res){
+          expect(res).to.have.property('domain');
+          expect(res.domain).to.have.property('name');
+          expect(res.domain).to.have.property('ttl');
+          expect(res.domain).to.have.property('zone_file');
+          done();
+        })
+        .catch(function(err){
+          done(err);
         });
-      });
+    });
+  });
+  describe('#delete()', function () {
+    it('should list all the domains', function (done) {
+      domains
+        .delete('www.prova.com')
+        .then(function(res){
+          expect(res).to.have.property('domain');
+          expect(res.domain).to.have.property('name');
+          expect(res.domain).to.have.property('ttl');
+          expect(res.domain).to.have.property('zone_file');
+          done();
+        })
+        .catch(function(err){
+          done(err);
+        });
+    });
   });
 });
